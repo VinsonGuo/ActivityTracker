@@ -1,4 +1,4 @@
-package com.guoziwei.timerecorder;
+package com.guoziwei.timerecorder.utils;
 
 import android.content.Context;
 import android.content.Intent;

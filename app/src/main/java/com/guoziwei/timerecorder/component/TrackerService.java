@@ -1,9 +1,11 @@
-package com.guoziwei.timerecorder;
+package com.guoziwei.timerecorder.component;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+
+import com.guoziwei.timerecorder.view.TrackerWindowManager;
 
 import de.greenrobot.event.EventBus;
 

@@ -1,4 +1,4 @@
-package com.guoziwei.timerecorder;
+package com.guoziwei.timerecorder.component;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +8,9 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import com.guoziwei.timerecorder.R;
+import com.guoziwei.timerecorder.utils.AccessibilityUtil;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1;

@@ -1,4 +1,4 @@
-package com.guoziwei.timerecorder;
+package com.guoziwei.timerecorder.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.guoziwei.timerecorder.R;
+import com.guoziwei.timerecorder.component.TrackerService;
 
 import de.greenrobot.event.EventBus;
 

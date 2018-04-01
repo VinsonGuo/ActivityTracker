@@ -1,10 +1,12 @@
-package com.guoziwei.timerecorder;
+package com.guoziwei.timerecorder.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.guoziwei.timerecorder.view.FloatingView;
 
 /**
  * Created by jinliangshan on 16/12/26.
