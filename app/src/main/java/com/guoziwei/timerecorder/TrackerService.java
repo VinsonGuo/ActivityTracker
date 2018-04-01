@@ -1,4 +1,4 @@
-package com.fashare.activitytracker;
+package com.guoziwei.timerecorder;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;

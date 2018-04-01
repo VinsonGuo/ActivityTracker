@@ -1,4 +1,4 @@
-package com.fashare.activitytracker;
+package com.guoziwei.timerecorder;
 
 import android.content.Intent;
 import android.net.Uri;
