@@ -13,12 +13,12 @@
         android:supportsRtl="true"
         android:name=".component.BaseApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".component.MainActivity">
-            <!--<intent-filter>
+        <activity android:name=".component.GuideActivity">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
 
         <service
@@ -33,12 +33,12 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <activity android:name=".component.AppListActivity">
-            <intent-filter>
+        <activity android:name=".component.MainActivity">
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
     </application>
 

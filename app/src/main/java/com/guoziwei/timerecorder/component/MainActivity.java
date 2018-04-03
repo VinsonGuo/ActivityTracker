@@ -1,51 +1,48 @@
 package com.guoziwei.timerecorder.component;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Toast;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 import com.guoziwei.timerecorder.R;
-import com.guoziwei.timerecorder.utils.AccessibilityUtil;
+import com.guoziwei.timerecorder.bean.Record;
+import com.guoziwei.timerecorder.component.adapter.AppListAdapter;
+import com.guoziwei.timerecorder.component.adapter.SimpleFragmentPagerAdapter;
+import com.guoziwei.timerecorder.utils.AppUtils;
 
-public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 1;
+import org.litepal.crud.DataSupport;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+public class MainActivity extends BaseActivity {
+
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        Fragment[] fragments = {new RecordFragment()};
+        viewPager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), Arrays.asList(fragments), Arrays.asList("今天")));
+        tabLayout.setupWithViewPager(viewPager);
 
-        checkOverlayPermission();
+//        loadData();
 
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(AccessibilityUtil.checkAccessibility(MainActivity.this)) {
-                    startService(
-                            new Intent(MainActivity.this, TrackerService.class)
-                                    .putExtra(TrackerService.COMMAND, TrackerService.COMMAND_OPEN)
-                    );
-                    finish();
-                }
-            }
-        });
+
     }
 
-    private void checkOverlayPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(this)) {
-                startActivityForResult(
-                        new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()))
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                        REQUEST_CODE
-                );
-                Toast.makeText(this, "请先授予 \"Activity 栈\" 悬浮窗权限", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 }

@@ -2,10 +2,14 @@ package com.guoziwei.timerecorder.component;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.guoziwei.timerecorder.bean.Record;
 import com.guoziwei.timerecorder.view.TrackerWindowManager;
+
+import org.litepal.crud.DataSupport;
 
 import de.greenrobot.event.EventBus;
 
@@ -16,13 +20,18 @@ public class TrackerService extends AccessibilityService {
     public static final String COMMAND_CLOSE = "COMMAND_CLOSE";
     TrackerWindowManager mTrackerWindowManager;
 
+    private long mStartTime;
+
+    private String mLastPackageName;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mStartTime = System.currentTimeMillis();
     }
 
-    private void initTrackerWindowManager(){
-        if(mTrackerWindowManager == null)
+    private void initTrackerWindowManager() {
+        if (mTrackerWindowManager == null)
             mTrackerWindowManager = new TrackerWindowManager(this);
     }
 
@@ -32,7 +41,7 @@ public class TrackerService extends AccessibilityService {
         initTrackerWindowManager();
 
         String command = intent.getStringExtra(COMMAND);
-        if(command != null) {
+        if (command != null) {
             if (command.equals(COMMAND_OPEN))
                 mTrackerWindowManager.addView();
             else if (command.equals(COMMAND_CLOSE))
@@ -52,10 +61,25 @@ public class TrackerService extends AccessibilityService {
         Log.d(TAG, "onAccessibilityEvent: " + event.getPackageName());
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
 
+            String packageName = event.getPackageName().toString();
             EventBus.getDefault().post(new ActivityChangedEvent(
-                    event.getPackageName().toString(),
+                    packageName,
                     event.getClassName().toString()
             ));
+
+            if (!TextUtils.equals(mLastPackageName, packageName)) {
+                long now = System.currentTimeMillis();
+                long interval = now - mStartTime;
+                Record record = new Record();
+                record.setStartTime(mStartTime);
+                record.setInterval(interval);
+                record.setPackageName(mLastPackageName);
+                record.save();
+
+                mLastPackageName = packageName;
+                mStartTime = System.currentTimeMillis();
+
+            }
         }
     }
 
@@ -65,7 +89,7 @@ public class TrackerService extends AccessibilityService {
         Log.d(TAG, "onDestroy");
     }
 
-    public static class ActivityChangedEvent{
+    public static class ActivityChangedEvent {
         private final String mPackageName;
         private final String mClassName;
 

@@ -3,11 +3,11 @@ package com.guoziwei.timerecorder.utils;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by guoziwei on 2018/4/1.
@@ -18,62 +18,37 @@ public class AppUtils {
 
     private static final String LogTag = "AppUtils";
 
-    public static List<ApplicationInfo> getInstallAppInfo(Context context) {
+    public static Map<String, ApplicationInfo> getInstallAppInfo(Context context) {
+        Map<String, ApplicationInfo> map = new HashMap<>(50);
         PackageManager mypm = context.getPackageManager();
         List<ApplicationInfo> appInfoList = mypm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
-        Collections.sort(appInfoList, new ApplicationInfo.DisplayNameComparator(mypm));// 排序
 
-        for(ApplicationInfo app: appInfoList) {
-            //Log.v(LogTag, "RunningAppInfoParam  getInstallAppInfo app label = " + (String)app.loadLabel(umpm));
-            //Log.v(LogTag, "RunningAppInfoParam  getInstallAppInfo app packageName = " + app.packageName);
+        for (ApplicationInfo app : appInfoList) {
+            map.put(app.packageName, app);
         }
 
-        return appInfoList;
+        return map;
     }
 
-    //获取第三方应用信息
-    public static ArrayList<String> getThirdAppInfo(Context context) {
-        List<ApplicationInfo> appList = getInstallAppInfo(context);
-        List<ApplicationInfo> thirdAppList = new ArrayList<ApplicationInfo>();
-        thirdAppList.clear();
-        for (ApplicationInfo app : appList) {
-            //非系统程序
-            if ((app.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
-                thirdAppList.add(app);
-            }
-            //本来是系统程序，被用户手动更新后，该系统程序也成为第三方应用程序了
-            else if ((app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0){
-                thirdAppList.add(app);
-            }
-        }
-        PackageManager mypm = context.getPackageManager();
-        ArrayList<String> thirdAppNameList = new ArrayList<String>();
-        for(ApplicationInfo app : thirdAppList) {
-            Log.v(LogTag, "RunningAppInfoParam getThirdAppInfo app label = " + (String)app.loadLabel(mypm));
-            thirdAppNameList.add((String)app.loadLabel(mypm));
-        }
-
-        return thirdAppNameList;
+    public static long getTodayTime() {
+        Calendar now = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+        today.clear();
+        today.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        return today.getTimeInMillis();
     }
 
-    //获取系统应用信息
-    public static ArrayList<String> getSystemAppInfo(Context context) {
-        List<ApplicationInfo> appList = getInstallAppInfo(context);
-        List<ApplicationInfo> sysAppList = new ArrayList<ApplicationInfo>();
-        sysAppList.clear();
-        for (ApplicationInfo app : appList) {
-            if ((app.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                sysAppList.add(app);
-            }
+    public static String getFormatTime(long ms) {
+        String time;
+        long hour = 60 * 60 * 1000;
+        if (ms >= hour) {
+            time = ms / hour + "小时" + (ms % hour) / (60 * 1000) + "分钟";
+        } else if (ms >= 60 * 1000) {
+            time = ms / (60 * 1000) + "分钟";
+        } else {
+            time = ms / 1000 + "秒";
         }
-        PackageManager mypm = context.getPackageManager();
-        ArrayList<String> sysAppNameList = new ArrayList<String>();
-        for(ApplicationInfo app : sysAppList) {
-            Log.v(LogTag, "RunningAppInfoParam getThirdAppInfo app label = " + (String)app.loadLabel(mypm));
-            sysAppNameList.add((String)app.loadLabel(mypm));
-        }
-
-        return sysAppNameList;
-
+        return time;
     }
+
 }

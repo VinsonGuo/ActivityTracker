@@ -2,6 +2,8 @@ package com.guoziwei.timerecorder.component;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
+
 import org.litepal.LitePal;
 
 /**
@@ -13,6 +15,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LitePal.initialize(this);
+        Stetho.initializeWithDefaults(this);
 
     }
 }
