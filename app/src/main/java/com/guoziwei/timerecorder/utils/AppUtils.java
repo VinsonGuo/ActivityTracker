@@ -1,8 +1,9 @@
 package com.guoziwei.timerecorder.utils;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -18,16 +19,30 @@ public class AppUtils {
 
     private static final String LogTag = "AppUtils";
 
-    public static Map<String, ApplicationInfo> getInstallAppInfo(Context context) {
+    public static Map<String, ApplicationInfo> getInstallAppInfo(Activity context) {
         Map<String, ApplicationInfo> map = new HashMap<>(50);
         PackageManager mypm = context.getPackageManager();
         List<ApplicationInfo> appInfoList = mypm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
+        boolean isFilter = false;
+        if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("show_system_app", true)) {
+            isFilter = true;
+        }
 
         for (ApplicationInfo app : appInfoList) {
+            if (isFilter) {
+                if (isSystemApp(app)) {
+                    continue;
+                }
+            }
             map.put(app.packageName, app);
+
         }
 
         return map;
+    }
+
+    public static boolean isSystemApp(ApplicationInfo app) {
+        return (ApplicationInfo.FLAG_SYSTEM & app.flags) != 0;
     }
 
     public static long getTodayTime() {
@@ -36,6 +51,13 @@ public class AppUtils {
         today.clear();
         today.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
         return today.getTimeInMillis();
+    }
+
+    public static long getDayTime(int year, int month, int day) {
+        Calendar someDay = Calendar.getInstance();
+        someDay.clear();
+        someDay.set(year, month, day, 0, 0, 0);
+        return someDay.getTimeInMillis();
     }
 
     public static String getFormatTime(long ms) {

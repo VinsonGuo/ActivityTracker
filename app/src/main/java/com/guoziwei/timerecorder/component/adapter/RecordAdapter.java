@@ -14,11 +14,11 @@ import java.util.List;
  * Created by guoziwei on 2018/4/1.
  */
 
-public class AppListAdapter extends BaseQuickAdapter<Record, BaseViewHolder> {
+public class RecordAdapter extends BaseQuickAdapter<Record, BaseViewHolder> {
 
 
-    public AppListAdapter(@Nullable List<Record> data) {
-        super(R.layout.item_app_list, data);
+    public RecordAdapter(@Nullable List<Record> data) {
+        super(R.layout.item_record, data);
     }
 
     @Override

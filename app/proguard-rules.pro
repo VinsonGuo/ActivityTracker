@@ -35,3 +35,15 @@
 -keep class * extends org.litepal.crud.DataSupport {
     *;
 }
+
+-keep class com.umeng.** {*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep public class com.guoziwei.timerecorder.R$*{
+public static final int *;
+}

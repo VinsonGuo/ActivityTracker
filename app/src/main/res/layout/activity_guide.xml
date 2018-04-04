@@ -9,16 +9,12 @@
     android:gravity="center"
     tools:context="com.guoziwei.timerecorder.component.GuideActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/track"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="一个全局的悬浮窗, 显示栈顶 Activity 信息"
+        android:text="需要打开辅助功能获取您的使用APP的时长"
         android:textSize="16sp"/>
 
     <Button
@@ -27,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
-        android:text="开启悬浮窗"
+        android:text="开启权限"
         android:textColor="@android:color/white"/>
 
 

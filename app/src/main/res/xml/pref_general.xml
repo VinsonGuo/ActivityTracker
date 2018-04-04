@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="show_system_app"
+        android:title="显示系统应用" />
+
+
+</PreferenceScreen>
