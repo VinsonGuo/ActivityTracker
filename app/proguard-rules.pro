@@ -36,6 +36,7 @@
     *;
 }
 
+#umneg
 -keep class com.umeng.** {*;}
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
@@ -47,3 +48,17 @@
 -keep public class com.guoziwei.timerecorder.R$*{
 public static final int *;
 }
+
+#event bus
+-keepclassmembers class ** {
+    public void onEvent*(***);
+}
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+    public <init>(java.lang.Throwable);
+}
+
+# Don't warn for missing support classes
+-dontwarn de.greenrobot.event.util.*$Support
+-dontwarn de.greenrobot.event.util.*$SupportManagerFragment

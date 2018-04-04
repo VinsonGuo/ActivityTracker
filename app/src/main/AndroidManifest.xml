@@ -6,10 +6,9 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".component.BaseApplication"
@@ -51,7 +50,7 @@
         <activity android:name=".component.RecordDetailActivity" />
         <activity
             android:name=".component.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
     </application>
 
 </manifest>
